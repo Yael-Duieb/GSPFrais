@@ -22,7 +22,7 @@ case 'saisirFrais':
     }
     break;
 case 'validerMajFraisForfait':
-    $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_SANITIZE_STRING);
+    $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
     if (lesQteFraisValides($lesFrais)) {
         $pdo->majFraisForfait($idVisiteur, $mois, $lesFrais);
     } else {
@@ -39,13 +39,7 @@ case 'validerCreationFrais':
     if (nbErreurs() != 0) {
         include 'vues/v_erreurs.php';
     } else {
-        $pdo->creeNouveauFraisHorsForfait(
-            $idUtilisateur,
-            $mois,
-            $libelle,
-            $dateFrais,
-            $montant
-        );
+        $pdo->creeNouveauFraisHorsForfait($idVisiteur, $mois, $libelle, $dateFrais,$montant);
     }
     break;
 case 'supprimerFrais':

@@ -34,7 +34,7 @@
                            class="btn btn-success btn-lg" role="button">
                             <span class="glyphicon glyphicon-pencil"></span>
                             <br>Valider les fiches de frais</a>
-                        <a href="index.php?uc=etatFrais&action=selectionnerMois"
+                        <a href="index.php?uc=suiviPaiement&action=choixMV"
                            class="btn btn-primary-c btn-lg" role="button">
                             <span class="glyphicon glyphicon-list-alt"></span>
                             <br> Suivre le paiement des fiches de frais</a>

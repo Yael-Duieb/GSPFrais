@@ -282,6 +282,23 @@ function estComptableConnecte()
     return $numAnnee.$numMois;
      
 }
+
+function getMoisSuivant($mois)
+{
+    $numAnnee = substr($mois, 0, 4);  //recupere les 4 premiers caracteres
+    $numMois = substr($mois, 4, 2);   //recupere les 2 caracteres a partir du 4e
+    if($numMois=='12'){
+        $numMois='01';
+        $numAnnee++; //++ = année suivante
+    }else{
+        $numMois++;
+    }
+    if (strlen($numMois) == 1) {//strlen=verifie le nombre de caractères. Ex:si mois=6, on va mettre 06.
+        $numMois = '0' . $numMois;
+    }
+    return $numAnnee.$numMois;
+     
+}
  
 function getLesDouzeDerniersMois($mois){
     $lesMois= array();

@@ -14,9 +14,7 @@
 <h2 style="color:orange">Valider les fiches de frais</h2>
 <div class="row">
    <div class="col-md-4">
-       <form action="index.php?uc=validerFrais&action=afficheFrais"
-             method="post" role="form">
-
+      <form action="index.php?uc=validerFrais&action=afficheFrais" method="post" role="form">
            <?php//liste déroulante des visiteurs?>
            
            <div class="form-group" style="display: inline-block">
@@ -74,3 +72,4 @@
                   role="button">
        </form>
    </div>
+ </div>

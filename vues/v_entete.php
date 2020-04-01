@@ -95,8 +95,8 @@
                                   Valider les fiches de frais
                               </a>
                           </li>
-                          <li <?php if ($uc == 'etatFrais') { ?>class="active"<?php } ?>>
-                              <a  onmouseover="this.style.text='#ffffff';"style="color: orange" href="index.php?uc=etatFrais&action=selectionnerMois">
+                          <li <?php if ($uc == 'suiviPaiement') { ?>class="active"<?php } ?>>
+                              <a  onmouseover="this.style.text='#ffffff';"style="color: orange" href="index.php?uc=suiviPaiement&action=choixMV">
                                   <span class="glyphicon glyphicon-list-alt"></span>
                                   Suivre le paiement des fiches de frais
                               </a>

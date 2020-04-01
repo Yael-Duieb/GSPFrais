@@ -10,10 +10,9 @@
  */
 ?>
    
-<div class="col-md-4">
-        <form action="index.php?uc=validFrais&action=afficheFrais"
-              method="post" role="form">
-           
+<form action="index.php?uc=validerFrais&action=corrigerFicheForfait"
+        method="post" role="form">
+    <div class="col-md-4">
             <?php//liste déroulante des visiteurs?>
            
             <div class="form-group" style="display: inline-block">
@@ -40,7 +39,6 @@
 
                 </select>
             </div>
-           
             <?php//liste déroulante des mois?>
            
             &nbsp;<div class="form-group" style="display: inline-block">
@@ -51,7 +49,7 @@
                         $mois = $unMois['mois'];
                         $numAnnee = $unMois['numAnnee'];
                         $numMois = $unMois['numMois'];
-                        if ($unMois == $moisASelectionner) {
+                        if ($mois == $moisASelectionner) {
                             ?>
                             <option selected value="<?php echo $mois ?>">
                                 <?php echo $numMois . '/' . $numAnnee ?> </option>
@@ -66,13 +64,13 @@
                     ?>    
 
                 </select>
-            </div>      
-</div><br><br><br><br>
+            </div> 
+    </div><br><br><br><br>
 
-<div class="row">    
+    <div class="row">
     <h2 style="color:orange">&nbsp;Valider la fiche de frais</h2>
     <h3>&nbsp;&nbsp;Eléments forfaitisés</h3>
-    <div class="col-md-4">  
+        <div class="col-md-4">  
             <fieldset>
                 <?php
                 foreach ($lesFraisForfait as $unFrais) {
@@ -93,41 +91,69 @@
                 <button class="btn btn-success" type="edit">Corriger</button>      
                 <button class="btn btn-danger" type="reset">Reinitialiser</button>
             </fieldset>
-    </div>
-</div>
+        </div>
+    
+    </div> 
+</form>
 <hr>
-       
-   
 
-<div class="panel panel-info-me">
-    <div class="panel-heading">Descriptif des éléments hors forfait </div>
-    <table class="table table-bordered table-responsive">
+     
+<form action="index.php?uc=validerFrais&action=corrigerFicheHorsForfait"
+              method="post" role="form">
+    <div class="panel-c panel-info-c">
+        <div class="panel-heading-c">Descriptif des éléments hors forfait </div>
+        <input type="hidden" id="idVisiteur" name="idVisiteur" size="10" 
+               maxlength="5" value="<?php echo $visiteurASelectionner ?>" class="form-control">
+        <input type="hidden" id="idMois" name="idMois" size="10" 
+               maxlength="5" value="<?php echo $moisASelectionner ?>" class="form-control">
+        <table class="table table-bordered table-responsive">
         <tr>
             <th class="date">Date</th>
             <th class="libelle">Libellé</th>
             <th class='montant'>Montant</th>
+            <th class='action'>Action</th>
             <th></th>
         </tr>
         <?php
+        
         foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
             $date = $unFraisHorsForfait['date'];
             $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-            $montant = $unFraisHorsForfait['montant']; ?>
+            $montant = $unFraisHorsForfait['montant'];
+            $id = $unFraisHorsForfait['id']; ?>
 
-            <tr>
-                <td><?php echo $date ?></td>
-                <td><?php echo $libelle ?></td>
-                <td><?php echo $montant ?></td>
+            <tr> 
+                <td> <input type="text" id="idDate"
+                               name="date"
+                               value="<?php echo $date ?>"
+                               class="form-control"></td>
+                 <td> <input type="text" id="idLibelle"
+                               name="libelle"
+                               value="<?php echo $libelle ?>"
+                               class="form-control"></td>
+                <td>  <input type="text" id="idMontant"
+                               name="montant"
+                               value="<?php echo $montant ?>"
+                               class="form-control"></td>
+                 
                 <th><button class="btn btn-success" type="edit">Corriger</button>
-                    <button class="btn btn-danger" type="reset">Reinitialiser</button></th>
+                    <button class="btn btn-danger" type="reset">Reinitialiser</button>
+                    <a href="index.php?uc=validerFrais&action=supprimerFrais&idFrais=<?php echo $id ?>&mois=<?php echo $unFraisHorsForfait['mois'] ?>"  
+                       type="reset" class="btn btn-danger" role="button">Supprimer</a>
             </tr>
             <?php
         }
         ?>
-    </table>
-</div>
-<h5>Nombre de justificatifs: <?php echo $nbJustificatifs ?><br><br></h5>
-    <input id="ok" type="submit" value="Valider" class="btn btn-success"
+        </table>
+    </div>
+    <h5>Nombre de justificatifs: <?php echo $nbJustificatifs ?><br><br></h5>
+</form>
+
+ <form action="index.php?uc=validerFrais&action=validerFrais"
+       method="post" role="form">
+   <input type="hidden" name="lstMois" id="idMois" size="10" value="<?php echo $moisASelectionner?>" class="form-control"/>
+   <input type="hidden" name="lstVisiteurs" id="idVisiteur" size="10" value="<?php echo $visiteurASelectionner ?>" class="form-control"/>
+   <input id="ok" type="submit" value="Valider" class="btn btn-success"
             role="button"></input>
     <button class="btn btn-danger" type="reset">Reinitialiser</button>
     </form>
