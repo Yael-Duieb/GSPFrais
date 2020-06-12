@@ -666,4 +666,54 @@ class PdoGsb
                $requetePrepare->execute();
         
     }
+    
+    /**
+     * Retourne mois ou l'etat des fiches est "VAlidée"
+     *
+     * @param String $idVisiteur ID du visiteur
+     *
+     * @return un tableau associatif de clé un mois -aaaamm- et de valeurs
+     *         année et mois correspondant
+     */
+    public function getLesMoisVA()
+    {
+        $requetePrepare = PdoGSB::$monPdo->prepare(
+            'SELECT fichefrais.mois AS mois '
+            . 'FROM fichefrais '
+            . 'WHERE fichefrais.idetat="VA" '
+            . 'ORDER BY fichefrais.mois desc'
+        );
+
+        $requetePrepare->execute();
+        
+        $lesMois = array();       
+        while ($laLigne = $requetePrepare->fetch()) {
+            $mois = $laLigne['mois'];
+            $numAnnee = substr($mois, 0, 4);
+            $numMois = substr($mois, 4, 2);
+            $lesMois[] = array(
+                'mois' => $mois,
+                'numAnnee' => $numAnnee,
+                'numMois' => $numMois
+            );       
+        
+        } 
+        return $lesMois;
+    }
+    
+    /**
+     * L'etat des fiches est actualisé à la bonne date, et etat = "Rembourser"
+     * @param type $leMois
+     */
+    public function rembourserFiche($idVisiteur,$mois){
+         $requetePrepare = PdoGSB::$monPdo->prepare(
+            'UPDATE fichefrais '
+            . 'SET idetat = "RB", datemodif = now()'
+            . 'WHERE fichefrais.idvisiteur= :leVisiteur '
+            . 'AND fichefrais.mois = :Mois'
+        );
+        $requetePrepare->bindParam(':leVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':Mois', $mois, PDO::PARAM_STR);
+        $requetePrepare->execute();
+    }
 }

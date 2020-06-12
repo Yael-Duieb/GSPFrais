@@ -8,7 +8,6 @@
  * @author    Yael Haya Duieb
  */
 $mois = getMois(date('d/m/Y'));
-$moisPrecedent = getMoisPrecedent($mois); 
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 if (!$uc) {
@@ -23,43 +22,57 @@ case 'choixMV':
     //var_dump($lesMois); //permet d'afficher tt les mois
     $lesCles2 = array_keys($lesMois);
     $moisASelectionner = $lesCles2[0];
-    include 'vues/v_suiviPaiement.php';
+    include 'vues/v_listeVisiteursMois.php';
     break;
 case 'affichageFiche':
+    $idVisiteur = filter_input(INPUT_POST, 'lstVisiteurs', FILTER_SANITIZE_STRING);
+    $lesVisiteurs= $pdo->getLesVisiteurs();
+    $visiteurASelectionner= $idVisiteur;
     $leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
-    $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-    $moisASelectionner = $leMois;
-    include 'vues/v_suiviPaiement.php';
-    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
-    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
-    $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
+    $lesMois= $pdo->getLesMoisVA();
+    $moisASelectionner= $leMois;
+    $lesInfosFicheFrais=$pdo->getLesInfosFicheFrais($idVisiteur, $mois);
+   if (!is_array($pdo->getLesInfosFicheFrais($idVisiteur, $mois))) { 
+        ajouterErreur('Pas de fiche de frais pour ce visiteur ce mois');
+        include 'vues/v_erreurs.php';
+        include 'vues/v_listeVisiteursMois.php';
+    } else {
+    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
+    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois); 
     $numAnnee = substr($leMois, 0, 4);
     $numMois = substr($leMois, 4, 2);
     $libEtat = $lesInfosFicheFrais['libEtat'];
     $montantValide = $lesInfosFicheFrais['montantValide'];
     $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
-    include 'vues/v_suiviPaiement.php';
+    include 'vues/v_etatFrais.php';}
     break;
-
+case 'rembourserFrais':
     $idVisiteur = filter_input(INPUT_POST, 'lstVisiteurs', FILTER_SANITIZE_STRING);
     $lesVisiteurs= $pdo->getLesVisiteurs();
     $visiteurASelectionner= $idVisiteur;
     $leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
-    $lesMois = getLesDouzeDerniersMois($mois);
-    $moisASelectionner = $leMois;
-    $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
-      if (!is_array($pdo->getLesInfosFicheFrais($idVisiteur, $leMois))) {
-        ajouterErreur('Pas de fiche de frais pour ce visiteur et pour ce mois');
+    $lesMois= $pdo->getLesMoisVA();
+    $moisASelectionner= $leMois;
+    $lesInfosFicheFrais=$pdo->getLesInfosFicheFrais($idVisiteur, $mois);
+    if (!is_array($pdo->getLesInfosFicheFrais($idVisiteur, $mois))) { 
+        ajouterErreur('Pas de fiche de frais pour ce visiteur ce mois');
         include 'vues/v_erreurs.php';
         include 'vues/v_listeVisiteursMois.php';
-    } else {
-    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
-    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
-    $nbJustificatifs= $pdo->getNbjustificatifs($idVisiteur, $leMois);
-    include 'vues/v_afficheFrais.php';
-           }  
+    } else {       
+    $libEtat = $lesInfosFicheFrais['libEtat'];
+    
+        if($libEtat== 'Validée et mise en paiement'){
+            $rembourser = $pdo->rembourserFiche($idVisiteur,$mois);
+        }   
+    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
+    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois); 
+    $numAnnee = substr($mois, 0, 4);
+    $numMois = substr($mois, 4, 2);
+    $montantValide = $lesInfosFicheFrais['montantValide'];
+    $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
+    $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
+    include 'vues/v_etatFrais.php';
+    } 
     break;
-case 'miseEnPaiement';
-    include 'vues/v_suiviPaiement.php';
 }

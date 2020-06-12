@@ -10,18 +10,34 @@
  * @author    Yael Haya Duieb
  * @author    Beth Sefer
  */
+
+$uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);   //Verifie le contenu de uc
+if ($uc=='validerFrais'){   
 ?>
-<h2 style="color:orange">Valider les fiches de frais</h2>
-<div class="row">
-   <div class="col-md-4">
-      <form action="index.php?uc=validerFrais&action=afficheFrais" method="post" role="form">
+    <h2>Valider les fiches de frais</h2>
+    <div class="row">
+        <div class="col-md-4"><?php //col-md-4 prend 1/4 de la page ?>
+            <form action="index.php?uc=validerFrais&action=afficheFrais" 
+                   method="post" role="form">
+<?php
+    }else{
+?> 
+    <h2>Suivre le paiement des fiches de frais</h2>
+    <div class="row">
+        <div class="col-md-4"><?php //col-md-4 prend 1/4 de la page ?>
+            <form action="index.php?uc=suiviPaiement&action=affichageFiche" 
+                method="post" role="form">
+<?php
+}
+?>
+          
            <?php//liste déroulante des visiteurs?>
            
            <div class="form-group" style="display: inline-block">
                <label for="lstVisiteurs" accesskey="n">Choisir le visiteur : </label>
                <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
-                   <?php
-                   foreach ($lesVisiteurs as $unVisiteur) {
+                    <?php
+                    foreach ($lesVisiteurs as $unVisiteur) {
                        $id = $unVisiteur['id'];
                        $nom = $unVisiteur['nom'];
                        $prenom = $unVisiteur['prenom'];
@@ -30,13 +46,13 @@
                            <option selected value="<?php echo $id ?>">
                                <?php echo $nom . ' ' . $prenom ?> </option>
                            <?php
-                       } else {
+                        }else{
                            ?>
                            <option value="<?php echo $id ?>">
                                <?php echo $nom . ' ' . $prenom ?> </option>
                            <?php
-                       }
-                   }
+                        }
+                    }
                    ?>    
 
                </select>
@@ -66,10 +82,11 @@
                    }
                    ?>    
 
-               </select>
-           </div>
-           <input id="ok" type="submit" value="Valider" class="btn btn-success"
+                </select>
+            </div>
+            <input id="ok" type="submit" value="Valider" class="btn btn-success"
                   role="button">
-       </form>
-   </div>
+            
+        </form>
+   </div>  
  </div>
