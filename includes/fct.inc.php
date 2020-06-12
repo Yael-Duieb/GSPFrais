@@ -295,7 +295,7 @@ function getMoisSuivant($mois)
         $numMois = '0' . $numMois;
     }
     return $numAnnee.$numMois;
-     
+   
 }
  
 function getLesDouzeDerniersMois($mois){
@@ -312,3 +312,9 @@ function getLesDouzeDerniersMois($mois){
     }
     return $lesMois;
 }
+
+
+
+
+
+

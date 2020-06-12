@@ -28,7 +28,6 @@
           $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);//Verifie le contenu de uc
           if ($estVisiteurConnecte) {
               ?>
-          
           <div class="header">
               <div class="row vertical-align">
                   <div class="col-md-4">
@@ -124,3 +123,5 @@
               </h1>
               <?php
           }
+          
+          
