@@ -73,6 +73,7 @@ case 'rembourserFrais':
     $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
     include 'vues/v_etatFrais.php';
-    } 
+    }
+    
     break;
 }
