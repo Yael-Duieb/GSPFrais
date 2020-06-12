@@ -9,7 +9,6 @@
  * @author    Yael Haya Duieb
  * @author    Beth Sefer
  */
-
 require_once 'includes/fct.inc.php';//Besoin en préliminaire
 require_once 'includes/class.pdogsb.inc.php';//idem
 session_start(); // Variable Super Globale

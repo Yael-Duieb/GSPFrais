@@ -253,6 +253,7 @@ function estVisiteurConnecte()
 {
    if (estConnecte()){
        return ($_SESSION['statut']== 'visiteur');
+  
    }  
 }
 /**
@@ -295,7 +296,6 @@ function getMoisSuivant($mois)
         $numMois = '0' . $numMois;
     }
     return $numAnnee.$numMois;
-   
 }
  
 function getLesDouzeDerniersMois($mois){
