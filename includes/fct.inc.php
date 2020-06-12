@@ -281,7 +281,6 @@ function estComptableConnecte()
     return $numAnnee.$numMois;
      
 }
-
 function getMoisSuivant($mois)
 {
     $numAnnee = substr($mois, 0, 4);  //recupere les 4 premiers caracteres
