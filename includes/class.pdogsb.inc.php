@@ -8,8 +8,7 @@
  * @package   GSB
  * @author    Yael Haya Duieb
  * @author    Beth Sefer
- */
-
+ 
 /**
  * Classe d'accès aux données.
  *

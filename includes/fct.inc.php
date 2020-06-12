@@ -11,7 +11,7 @@
  */
 
 /**
- * Teste si un quelconque visiteur est connecté
+ * Teste si un visiteur est connecté
  *
  * @return vrai ou faux
  */
@@ -19,7 +19,6 @@ function estConnecte()
 {
     return isset($_SESSION['idUtilisateur']);//isset: question: Est qu il y a un IdVisiteur dans la SuperGlobable ?(vrai ou faux?)
 }
-
 /**
  * Enregistre dans une variable session les infos d'un visiteur
  * 
