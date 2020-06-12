@@ -47,6 +47,7 @@ case 'affichageFiche':
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
     include 'vues/v_etatFrais.php';}
     break;
+    
 case 'rembourserFrais':
     $idVisiteur = filter_input(INPUT_POST, 'lstVisiteurs', FILTER_SANITIZE_STRING);
     $lesVisiteurs= $pdo->getLesVisiteurs();
@@ -73,7 +74,6 @@ case 'rembourserFrais':
     $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
     include 'vues/v_etatFrais.php';
-    }
-    
+    }   
     break;
 }

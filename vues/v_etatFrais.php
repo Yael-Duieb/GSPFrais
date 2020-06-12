@@ -30,10 +30,10 @@ if ($uc=='etatFrais'){   //si c un visiteur alors le fond est bleu
             <label for="lstVisiteurs" accesskey="n">Visiteur : </label>
             <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
                 <?php
-                foreach ($lesVisiteurs as $unVisiteur) {
-                    $id = $unVisiteur['id'];
-                    $nom = $unVisiteur['nom'];
-                    $prenom = $unVisiteur['prenom'];
+                foreach ($lesVisiteurs as $visiteur) {
+                    $id = $visiteur['id'];
+                    $nom = $visiteur['nom'];
+                    $prenom = $visiteur['prenom'];
                     if ($id == $visiteurASelectionner) {
                         ?>
                         <option selected value="<?php echo $id ?>">
@@ -145,7 +145,6 @@ if($uc=='suiviPaiement' && $lesInfosFicheFrais['libEtat']=='Validée et mise en 
     <input style="border-color: #ff6f02;background-color: #ff6f02;"id="ok" 
            type="submit" value="Mise en paiement" class="btn btn-success" 
             role="button">
-    
 <?php 
     } 
 ?>
